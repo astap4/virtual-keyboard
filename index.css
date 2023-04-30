@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+}
+
+.main {
+    background-image: url('./assets/—Pngtree—minimalistic\ office\ illustration\ background_943594.jpg');
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    perspective: 500px;
+}
+
+.monitor {
+    background-image: url('./assets/1622585882imac.svg');
+    width: 620px;
+    height: 470px;
+    margin-top: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.screen {
+    position: relative;
+    top: 28px;
+    left: 28px;
+    width: 90%;
+    height: 53.5%;
+    border-radius: 3%;
+    background: -webkit-linear-gradient(180deg, rgb(48, 55, 58), rgb(11, 11, 11) 72%);
+    background: -moz-linear-gradient(180deg, rgb(48, 55, 58), rgb(11, 11, 11) 72%);
+    background: linear-gradient(180deg, rgb(48, 55, 58), rgb(11, 11, 11) 72%);
+    border: none;
+}
+
+.keyboard {
+    background-color: rgb(212, 212, 212);
+    width: 735px;
+    padding: 5px;
+    border-radius: 5px;
+    transform: rotateX(12deg);
+    border-bottom: 6px outset #e0e1e2;
+    border-right: 3px outset #d8dadc;
+}
+.row {
+    display: flex;
+    gap: 5.5px;
+    margin: 5px;
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    color: #ffffff;
+    background: #444444;
+    border-radius: 3px;
+    border-bottom: 4px outset #e0e1e2;
+    border-right: 3px outset #d8dadc;
+    cursor: pointer;
+    transition: border-radius 0.3s, background-color 0.3s;
+}
+
+.Backspace, 
+.keyboard 
+.CapsLock,
+.Enter,
+.Space,
+.Tab, 
+.ShiftLeft,
+.ShiftRight {
+    flex-grow: 1;
+}
+
