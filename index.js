@@ -148,13 +148,25 @@ class Keyboard {
             const pressedKey = document.querySelector(`.${e.code}`)
             pressedKey.classList.remove('press')
         });
+
+        document.addEventListener('click', (e) => {
+            const { target } = e;
+            const key = target.closest(".key");
+            if (!key) return false;
+            if (key.classList.contains('CapsLock')) {
+                this.changeCase()
+            } else {
+                this.printKey(key)
+            }   
+            return "click";
+        })
     }
 
     printKey(pressedKey) {
         const screen = document.querySelector('.screen');
-        const letter = pressedKey.querySelector(`.${this.#keyboardLang}`);
-        const letterCase = letter.querySelector(`.${this.#keyboardCase}`).textContent
-        screen.value += letterCase
+        const letter = pressedKey.querySelector(`.${this.#keyboardLang}`)
+        .querySelector(`.${this.#keyboardCase}`).textContent
+        screen.value += letter
     }
 }
 
