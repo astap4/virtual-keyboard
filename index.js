@@ -15,6 +15,7 @@ function createComponents() {   //Create Monitor and Keyboard
 
     const screen = document.createElement("textarea");
     screen.classList.add('screen');
+    screen.value = "Клавиатура создана в операционной системе Windows.\nДля переключения языка: Ctrl+Alt\n";
     monitor.append(screen);
 
     const keyboard = document.createElement("div");
@@ -60,7 +61,7 @@ const engCaseUp = [
 ];
 
 
-function addKeys() {
+function addKeys(lang) {
     const keyboard = document.querySelector('.keyboard')
     for (let i = 0; i < keyCodes.length; i++) {
         const row = document.createElement("div");
@@ -69,22 +70,45 @@ function addKeys() {
             const key = document.createElement("div");
             key.classList.add("key");
             key.classList.add(keyCodes[i][j]);
+
             const eng = document.createElement("span");
             eng.classList.add("eng");
-            key.append(eng)
             const engKeyCaseDown = document.createElement("span");
-            engKeyCaseDown.classList.add("caseUp");
+            engKeyCaseDown.classList.add("caseDown");
             engKeyCaseDown.textContent = engCaseDown[i][j];
+            const engKeyCaseUp = document.createElement("span");
+            engKeyCaseUp.classList.add("caseUp");
+            engKeyCaseUp.classList.add("hidden");
+            engKeyCaseUp.textContent = engCaseUp[i][j];
+            key.append(eng)
             eng.append(engKeyCaseDown);
+            eng.append(engKeyCaseUp);
+
+            const rus = document.createElement("span");
+            rus.classList.add("rus");
+            const rusKeyCaseDown = document.createElement("span");
+            rusKeyCaseDown.classList.add("caseDown");
+            rusKeyCaseDown.textContent = rusCaseDown[i][j];
+            const rusKeyCaseUp = document.createElement("span");
+            rusKeyCaseUp.classList.add("caseUp");
+            rusKeyCaseUp.classList.add("hidden");
+            rusKeyCaseUp.textContent = rusCaseUp[i][j];
+            key.append(rus)
+            rus.append(rusKeyCaseDown);
+            rus.append(rusKeyCaseUp);
             row.append(key);
+            if (lang === 'eng' || !lang) {
+                rus.classList.toggle("hidden");
+            } else {
+                eng.classList.toggle("hidden");
+            }
         }
         keyboard.append(row)
     }
 }
-addKeys()
+addKeys(localStorage.getItem('lang'))
 
 document.addEventListener("keydown", (e) => {
-    console.log(`Key "${e.key, e.code}"`);
     const pressedKey = document.querySelector(`.${e.code}`)
     pressedKey.classList.add('press')
 });
@@ -92,3 +116,24 @@ document.addEventListener("keyup", (e) => {
     const pressedKey = document.querySelector(`.${e.code}`)
     pressedKey.classList.remove('press')
 });
+
+
+document.addEventListener("keydown", (e) => {
+    if (e.code === "AltLeft" && e.ctrlKey) {
+        changeLang()
+    }
+});
+
+function changeLang() {
+    const langEn = document.querySelectorAll('.eng')
+    const langRu = document.querySelectorAll('.rus')
+    langEn.forEach(elem => elem.classList.toggle('hidden'))
+    langRu.forEach(elem => elem.classList.toggle('hidden'))
+    const lang = localStorage.getItem('lang');
+    if (!lang) lang = 'eng';
+    if (lang === 'eng') {
+        const lang = localStorage.setItem('lang', 'rus');
+    } else {
+        const lang = localStorage.setItem('lang', 'eng');
+    }
+}
