@@ -139,8 +139,6 @@ class Keyboard {
                 this.changeLang()
             } else if (e.key === "Shift" && e.shiftKey && !e.repeat) {
                 this.changeCase()
-            } else if (e.key === "Shift"|| e.key === "Control"|| e.key === "Alt"|| e.key === "AltGraph"||e.key === "Meta" ) {
-                return;
             } else {
                 this.printKey(pressedKey)
             }
@@ -184,6 +182,14 @@ class Keyboard {
         const letter = pressedKey.querySelector(`.${this.#keyboardLang}`)
             .querySelector(`.${this.#keyboardCase}`).textContent;
         switch (pressedKey.classList[1]) {
+            case 'ControlLeft':
+            case 'ControlRight':
+            case 'ShiftLeft':
+            case 'ShiftRight':
+            case 'AltRight':
+            case 'AltLeft':
+            case 'MetaLeft':
+                break;
             case 'CapsLock':
                 this.changeCase();
                 break;
