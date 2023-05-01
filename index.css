@@ -34,8 +34,8 @@ body {
     background: -moz-linear-gradient(180deg, rgb(48, 55, 58), rgb(11, 11, 11) 72%);
     background: linear-gradient(180deg, rgb(48, 55, 58), rgb(11, 11, 11) 72%);
     border: none;
-    color:rgb(206, 219, 221);
-    font-size: 15px;
+    color: rgb(206, 219, 221);
+    font-size: 16px;
     padding: 5px;
 }
 
@@ -50,6 +50,7 @@ body {
     border-radius: 10px;
     margin-bottom: 3%;
 }
+
 .row {
     display: flex;
     gap: 1%;
@@ -65,37 +66,51 @@ body {
     color: #ffffff;
     font-size: 15px;
     background: #444444;
-    border-radius: 3px;
-    border-bottom: 5px outset #e0e1e2;
+    border-bottom: 6px outset #e0e1e2;
     border-right: 3px outset #c0c1c2;
     border-radius: 5px;
     cursor: pointer;
-    transition: border-radius 0.3s, background-color 0.3s;
+    transition: border-radius 0.4s, background-color 0.3s;
+}
+
+@keyframes press {
+    0% {
+        background-color: #444444;
+        transform: translateY(0);
+        border-bottom: 6px outset #e0e1e2;
+    }
+
+    100% {
+        background-color: rgb(114, 176, 187);
+        transform: translateY(3px);
+        border-bottom: 2px outset #e0e1e2;
+    }
 }
 
 .key.press {
- background-color: rgb(114, 176, 187);
- transform: translateY(2px);
- border-bottom: 2px outset #e0e1e2;
+    animation-name: press;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
 }
 
-.Backspace, 
-.keyboard 
-.CapsLock,
+.Backspace,
+.keyboard .CapsLock,
 .Enter,
 .Space,
-.Tab, 
+.Tab,
 .ShiftLeft,
 .ShiftRight {
     flex-grow: 1;
 }
 
-.key > span.hidden {
-     display: none;
+.key>span.hidden {
+    display: none;
 }
+
 .caseUp.hidden {
     display: none;
 }
+
 .caseDown.hidden {
     display: none;
 }
@@ -116,4 +131,3 @@ body {
         height: 3.2vh;
     }
 }
-

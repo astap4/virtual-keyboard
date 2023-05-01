@@ -92,7 +92,7 @@ class Keyboard {
                 } else {
                     eng.classList.toggle("hidden");
                 }
-                if (this.#keyboardCase === "caseDown"){
+                if (this.#keyboardCase === "caseDown") {
                     engKeyCaseUp.classList.toggle("hidden");
                     rusKeyCaseUp.classList.toggle("hidden");
                 } else {
@@ -137,11 +137,9 @@ class Keyboard {
             pressedKey.classList.add('press')
             if (e.code === "AltLeft" && e.ctrlKey) {
                 this.changeLang()
-            } else if (e.code === 'CapsLock') {               
-                this.changeCase()
             } else {
                 this.printKey(pressedKey)
-            }      
+            }
         });
 
         document.addEventListener("keyup", (e) => {
@@ -153,20 +151,46 @@ class Keyboard {
             const { target } = e;
             const key = target.closest(".key");
             if (!key) return false;
-            if (key.classList.contains('CapsLock')) {
-                this.changeCase()
-            } else {
-                this.printKey(key)
-            }   
+            key.classList.add('press')
+            key.addEventListener("animationend", () => {
+                key.classList.remove('press');
+            });
+            this.printKey(key)
             return "click";
         })
     }
 
     printKey(pressedKey) {
         const screen = document.querySelector('.screen');
+        const pointerEnd = screen.selectionEnd;;
+        screen.focus()
         const letter = pressedKey.querySelector(`.${this.#keyboardLang}`)
-        .querySelector(`.${this.#keyboardCase}`).textContent
-        screen.value += letter
+            .querySelector(`.${this.#keyboardCase}`).textContent;
+        switch (pressedKey.classList[1]) {
+            case 'CapsLock':
+                this.changeCase();
+                break;
+            case "Enter":
+                screen.value += "\n";
+                break;
+            case "Tab":
+                screen.value += "    ";
+                break;
+            case "Backspace":
+                if (pointerEnd === 0) return;
+                screen.value = screen.value.slice(0, pointerEnd - 1)
+                    + screen.value.slice(pointerEnd);
+                screen.selectionEnd = pointerEnd - 1;
+                break;
+            case "Delete":
+                if (pointerEnd === screen.value.length) return;
+                screen.value = screen.value.slice(0, pointerEnd)
+                    + screen.value.slice(pointerEnd + 1);
+                screen.selectionEnd = pointerEnd;
+                break;
+            default:
+                screen.value += letter;
+        }
     }
 }
 
@@ -197,8 +221,6 @@ function buildPage() {
 }
 
 buildPage()
-
-screen.value += 'hello'
 
 
 
