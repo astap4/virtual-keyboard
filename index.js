@@ -230,8 +230,7 @@ function buildPage() {
     screen.value = "Клавиатура создана в операционной системе Windows.\nДля переключения языка: Ctrl+Alt\n";
     monitor.append(screen);
 
-    const lang = localStorage.getItem('lang')
-    if (!lang) { lang = 'eng' }
+    const lang = localStorage.getItem('lang') || 'eng';
     const keyboard = new Keyboard(lang)
     keyboard.render()
 }
