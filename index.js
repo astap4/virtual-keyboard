@@ -1,5 +1,6 @@
 class Keyboard {
     #keyboardLang;
+    #keyboardCase;
     #keyboardLayout = {
         keys: [
             ["Backquote", "Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6", "Digit7", "Digit8", "Digit9", "Digit0", "Minus", "Equal", "Backspace"],
@@ -40,30 +41,16 @@ class Keyboard {
 
     constructor(keyboardLang) {
         this.#keyboardLang = keyboardLang;
+        this.#keyboardCase = "caseDown";
     }
 
-    render() {  
-        const main = document.createElement("main");
-        main.classList.add('main')
-        document.body.append(main);
-
-        const title = document.createElement("h1");
-        title.classList.add('main-title');
-        title.textContent = 'Virtual Keyboard'
-        main.append(title);
-
-        const monitor = document.createElement("div");
-        monitor.classList.add('monitor');
-        main.append(monitor);
-
-        const screen = document.createElement("textarea");
-        screen.classList.add('screen');
-        screen.value = "Клавиатура создана в операционной системе Windows.\nДля переключения языка: Ctrl+Alt\n";
-        monitor.append(screen);
-
+    render() {
+        const main = document.querySelector('.main')
         const keyboard = document.createElement("div");
         keyboard.className = "keyboard";
         main.append(keyboard);
+        this.addKeys()
+        this.initListeners();
     }
 
     addKeys() {
@@ -83,7 +70,6 @@ class Keyboard {
                 engKeyCaseDown.textContent = this.#keyboardLayout.engLowerCase[i][j];
                 const engKeyCaseUp = document.createElement("span");
                 engKeyCaseUp.classList.add("caseUp");
-                engKeyCaseUp.classList.add("hidden");
                 engKeyCaseUp.textContent = this.#keyboardLayout.engUpperCase[i][j];
                 key.append(eng)
                 eng.append(engKeyCaseDown);
@@ -96,7 +82,6 @@ class Keyboard {
                 rusKeyCaseDown.textContent = this.#keyboardLayout.rusLowerCase[i][j];
                 const rusKeyCaseUp = document.createElement("span");
                 rusKeyCaseUp.classList.add("caseUp");
-                rusKeyCaseUp.classList.add("hidden");
                 rusKeyCaseUp.textContent = this.#keyboardLayout.rusUpperCase[i][j];
                 key.append(rus)
                 rus.append(rusKeyCaseDown);
@@ -106,6 +91,13 @@ class Keyboard {
                     rus.classList.toggle("hidden");
                 } else {
                     eng.classList.toggle("hidden");
+                }
+                if (this.#keyboardCase === "caseDown"){
+                    engKeyCaseUp.classList.toggle("hidden");
+                    rusKeyCaseUp.classList.toggle("hidden");
+                } else {
+                    engKeyCaseDown.classList.toggle("hidden");
+                    rusKeyCaseDown.classList.toggle("hidden");
                 }
             }
             keyboard.append(row)
@@ -119,29 +111,83 @@ class Keyboard {
         langRuBtn.forEach(elem => elem.classList.toggle('hidden'))
         if (this.#keyboardLang === 'eng') {
             localStorage.setItem('lang', 'rus');
+            this.#keyboardLang = 'rus'
         } else {
             localStorage.setItem('lang', 'eng');
+            this.#keyboardLang = 'eng'
         }
+    }
+
+    changeCase() {
+        const keysCaseDown = document.querySelectorAll('.caseDown')
+        const keysCaseUp = document.querySelectorAll('.caseUp')
+        keysCaseDown.forEach(elem => elem.classList.toggle('hidden'))
+        keysCaseUp.forEach(elem => elem.classList.toggle('hidden'))
+        if (this.#keyboardCase === 'caseDown') {
+            this.#keyboardCase = 'caseUp'
+        } else {
+            this.#keyboardCase = 'caseDown'
+        }
+    }
+
+    initListeners() {
+        document.addEventListener("keydown", (e) => {
+            e.preventDefault();
+            const pressedKey = document.querySelector(`.${e.code}`)
+            pressedKey.classList.add('press')
+            if (e.code === "AltLeft" && e.ctrlKey) {
+                this.changeLang()
+            } else if (e.code === 'CapsLock') {               
+                this.changeCase()
+            } else {
+                this.printKey(pressedKey)
+            }      
+        });
+
+        document.addEventListener("keyup", (e) => {
+            const pressedKey = document.querySelector(`.${e.code}`)
+            pressedKey.classList.remove('press')
+        });
+    }
+
+    printKey(pressedKey) {
+        const screen = document.querySelector('.screen');
+        const letter = pressedKey.querySelector(`.${this.#keyboardLang}`);
+        const letterCase = letter.querySelector(`.${this.#keyboardCase}`).textContent
+        screen.value += letterCase
     }
 }
 
-const lang = localStorage.getItem('lang')
-if(!lang) {lang = 'eng'}
-const keyboard = new Keyboard(lang)
-keyboard.render()
-keyboard.addKeys();
+function buildPage() {
+    const main = document.createElement("main");
+    main.classList.add('main')
+    document.body.append(main);
 
-//listeners
-document.addEventListener("keydown", (e) => {
-    const pressedKey = document.querySelector(`.${e.code}`)
-    pressedKey.classList.add('press')
-    if (e.code === "AltLeft" && e.ctrlKey) {
-        keyboard.changeLang()
-    }
-});
+    const title = document.createElement("h1");
+    title.classList.add('main-title');
+    title.textContent = 'Virtual Keyboard'
+    main.append(title);
 
-document.addEventListener("keyup", (e) => {
-    const pressedKey = document.querySelector(`.${e.code}`)
-    pressedKey.classList.remove('press')
-});
+    const monitor = document.createElement("div");
+    monitor.classList.add('monitor');
+    main.append(monitor);
+
+    const screen = document.createElement("textarea");
+    screen.classList.add('screen');
+    screen.value = "Клавиатура создана в операционной системе Windows.\nДля переключения языка: Ctrl+Alt\n";
+    monitor.append(screen);
+
+    const lang = localStorage.getItem('lang')
+    if (!lang) { lang = 'eng' }
+
+    const keyboard = new Keyboard(lang)
+    keyboard.render()
+}
+
+buildPage()
+
+screen.value += 'hello'
+
+
+
 
