@@ -1,0 +1,167 @@
+body {
+    margin: 0;
+    background-image: url('./assets/—Pngtree—minimalistic\ office\ illustration\ background_943594.jpg');
+    background-size: cover;
+}
+
+.main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    perspective: 500px;
+}
+
+.monitor {
+    background-color: rgb(13, 13, 13);
+    border-bottom: 5vh outset #ffffff;
+    border-radius: 10px;
+    width: 800px;
+    height: 40%;
+    padding: 10px;
+    background-repeat: no-repeat;
+}
+
+.screen {
+    position: relative;
+    width: 98%;
+    height: 90%;
+    border-radius: 10px;
+    background: -webkit-linear-gradient(180deg, rgb(48, 55, 58), rgb(11, 11, 11) 72%);
+    background: -moz-linear-gradient(180deg, rgb(48, 55, 58), rgb(11, 11, 11) 72%);
+    background: linear-gradient(180deg, rgb(48, 55, 58), rgb(11, 11, 11) 72%);
+    border: none;
+    color: rgb(206, 219, 221);
+    font-size: 16px;
+    padding: 5px;
+}
+
+.keyboard {
+    background-color: rgb(212, 212, 212);
+    width: 855px;
+    padding: 0.5%;
+    border-radius: 5px;
+    transform: rotateX(12deg);
+    border-bottom: 5px outset #e0e1e2;
+    border-right: 2px outset #d8dadc;
+    border-radius: 10px;
+    margin-bottom: 3%;
+}
+
+.row {
+    display: flex;
+    gap: 1%;
+    margin: 0.6%;
+}
+
+.key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5.4%;
+    height: 4.5vh;
+    color: #ffffff;
+    font-size: 15px;
+    background: #444444;
+    border-bottom: 5px outset #e0e1e2;
+    border-right: 3px outset #c0c1c2;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border-radius 0.4s, background-color 0.3s;
+}
+
+@keyframes press {
+    0% {
+        background-color: #444444;
+        transform: translateY(0);
+        border-bottom: 5px outset #e0e1e2;
+    }
+
+    100% {
+        background-color: rgb(114, 176, 187);
+        transform: translateY(3px);
+        border-bottom: 2px outset #e0e1e2;
+    }
+}
+
+.key.press {
+    animation-name: press;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+.Backspace,
+.keyboard .CapsLock,
+.Enter,
+.Space,
+.Tab,
+.ShiftLeft,
+.ShiftRight {
+    flex-grow: 1;
+}
+
+.key>span.hidden {
+    display: none;
+}
+
+.caseUp.hidden {
+    display: none;
+}
+
+.caseDown.hidden {
+    display: none;
+}
+
+@media only screen and (max-width: 1500px) {
+    .monitor {
+        width: 700px;
+    }
+
+    .keyboard {
+        width: 755px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .monitor {
+        width: 560px;
+    }
+
+    .keyboard {
+        width: 600px;
+    }
+
+    .key {
+        font-size: 12px;
+        width: 5.3%;
+    }
+
+}
+
+@media only screen and (max-width: 1000px) {
+    .monitor {
+        width: 500px;
+    }
+
+    .keyboard {
+        width: 535px;
+    }
+}
+
+@media only screen and (max-width: 580px) {
+    .monitor {
+        width: 81%;
+        height: 25%;
+        border-bottom: 30px outset #ffffff;
+    }
+
+    .keyboard {
+        width: 90%;
+    }
+
+    .key {
+        font-size: 8px;
+        height: 3.2vh;
+    }
+}
