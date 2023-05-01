@@ -1,10 +1,10 @@
 body {
     margin: 0;
+    background-image: url('./assets/—Pngtree—minimalistic\ office\ illustration\ background_943594.jpg');
+    background-size: cover;
 }
 
 .main {
-    background-image: url('./assets/—Pngtree—minimalistic\ office\ illustration\ background_943594.jpg');
-    background-size: cover;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -14,14 +14,12 @@ body {
 }
 
 .monitor {
-    /* background-image: url('./assets/1622585882imac.svg'); */
     background-color: rgb(13, 13, 13);
     border-bottom: 5vh outset #ffffff;
     border-radius: 10px;
-    width: 42.2%;
+    width: 800px;
     height: 40%;
     padding: 10px;
-    /* background-size: cover; */
     background-repeat: no-repeat;
 }
 
@@ -41,7 +39,7 @@ body {
 
 .keyboard {
     background-color: rgb(212, 212, 212);
-    width: 45%;
+    width: 855px;
     padding: 0.5%;
     border-radius: 5px;
     transform: rotateX(12deg);
@@ -66,7 +64,7 @@ body {
     color: #ffffff;
     font-size: 15px;
     background: #444444;
-    border-bottom: 6px outset #e0e1e2;
+    border-bottom: 5px outset #e0e1e2;
     border-right: 3px outset #c0c1c2;
     border-radius: 5px;
     cursor: pointer;
@@ -77,7 +75,7 @@ body {
     0% {
         background-color: #444444;
         transform: translateY(0);
-        border-bottom: 6px outset #e0e1e2;
+        border-bottom: 5px outset #e0e1e2;
     }
 
     100% {
@@ -115,7 +113,43 @@ body {
     display: none;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1500px) {
+    .monitor {
+        width: 700px;
+    }
+
+    .keyboard {
+        width: 755px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .monitor {
+        width: 560px;
+    }
+
+    .keyboard {
+        width: 600px;
+    }
+
+    .key {
+        font-size: 12px;
+        width: 5.3%;
+    }
+
+}
+
+@media only screen and (max-width: 1000px) {
+    .monitor {
+        width: 500px;
+    }
+
+    .keyboard {
+        width: 535px;
+    }
+}
+
+@media only screen and (max-width: 580px) {
     .monitor {
         width: 81%;
         height: 25%;
