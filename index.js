@@ -134,9 +134,13 @@ class Keyboard {
         document.addEventListener("keydown", (e) => {
             e.preventDefault();
             const pressedKey = document.querySelector(`.${e.code}`)
-            pressedKey.classList.add('press')
+            pressedKey.classList.toggle('press')
             if (e.code === "AltLeft" && e.ctrlKey) {
                 this.changeLang()
+            } else if (e.key === "Shift" && e.shiftKey && !e.repeat) {
+                this.changeCase()
+            } else if (e.key === "Shift"|| e.key === "Control"|| e.key === "Alt"|| e.key === "AltGraph"||e.key === "Meta" ) {
+                return;
             } else {
                 this.printKey(pressedKey)
             }
@@ -144,17 +148,30 @@ class Keyboard {
 
         document.addEventListener("keyup", (e) => {
             const pressedKey = document.querySelector(`.${e.code}`)
-            pressedKey.classList.remove('press')
+            if (e.code != "CapsLock") {
+                pressedKey.classList.remove('press')
+            }
+            if (e.key === "Shift" && !e.shiftKey) {
+                this.changeCase()
+            }
         });
 
         document.addEventListener('click', (e) => {
             const { target } = e;
             const key = target.closest(".key");
             if (!key) return false;
-            key.classList.add('press')
-            key.addEventListener("animationend", () => {
-                key.classList.remove('press');
-            });
+            if (!key.classList.contains('CapsLock')) {
+                key.classList.add('press')
+                key.addEventListener("animationend", () => {
+                    key.classList.remove('press');
+                });
+            } else {
+                if (key.classList.contains('press')) {
+                    key.classList.remove('press');
+                } else {
+                    key.classList.add('press');
+                }
+            }
             this.printKey(key)
             return "click";
         })
@@ -215,7 +232,6 @@ function buildPage() {
 
     const lang = localStorage.getItem('lang')
     if (!lang) { lang = 'eng' }
-
     const keyboard = new Keyboard(lang)
     keyboard.render()
 }
